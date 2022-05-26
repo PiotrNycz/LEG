@@ -22,48 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
+#include "Object.hpp"
+#include "ObjectSimpleMacrosCompare.hpp"
+#include "ObjectTests.hpp"
 
-namespace details
-{
-template <typename V>
-constexpr static int spaceship(const V& lhs, const V& rhs) noexcept
-{
-    if (lhs < rhs) return -1;
-    if (rhs < lhs) return 1;
-    return 0;
+int main() {
+    testObjectCompare();
 }
-template <typename ...V>
-constexpr static int spaceship(const V& ...lhs, const V& ...rhs) noexcept
-{
-    int result = 0;
-    static_cast<void>(
-        ((0 == (result = spaceship(lhs, rhs))) && ...)
-    );
-    return result;
-}
-
-}
-
-struct Spaceship {
-    template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept
-    {
-        return [&lhs...](const V& ...rhs) {
-            return details::spaceship<V...>(lhs..., rhs...);
-        };
-    }
-};
-constexpr Spaceship spaceship{};
-
-/// store lhs by value, thus allowing to use extra wrappers for values
-struct SpaceshipByValue {
-    template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept
-    {
-        return [lhs...](const V& ...rhs) {
-            return details::spaceship<V...>(lhs..., rhs...);
-        };
-    }
-};
-constexpr SpaceshipByValue spaceshipByValue{};

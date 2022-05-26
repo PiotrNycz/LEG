@@ -24,46 +24,38 @@ SOFTWARE.
 
 #pragma once
 
-namespace details
+#include "Object.hpp"
+#include "SimpleCompareMacros.hpp"
+#include "ColorSimpleMacrosCompare.hpp"
+
+constexpr bool operator==(const Object& lhs, const Object& rhs) noexcept
 {
-template <typename V>
-constexpr static int spaceship(const V& lhs, const V& rhs) noexcept
-{
-    if (lhs < rhs) return -1;
-    if (rhs < lhs) return 1;
-    return 0;
-}
-template <typename ...V>
-constexpr static int spaceship(const V& ...lhs, const V& ...rhs) noexcept
-{
-    int result = 0;
-    static_cast<void>(
-        ((0 == (result = spaceship(lhs, rhs))) && ...)
-    );
-    return result;
+    EQUAL_FIELD_6(x, y, z, weight, velocity, color);
+    return true;
 }
 
+constexpr bool operator<(const Object& lhs, const Object& rhs) noexcept
+{
+    LESS_FIELD_6(x, y, z, weight, velocity, color);
+    return false;
 }
 
-struct Spaceship {
-    template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept
-    {
-        return [&lhs...](const V& ...rhs) {
-            return details::spaceship<V...>(lhs..., rhs...);
-        };
-    }
-};
-constexpr Spaceship spaceship{};
+constexpr bool operator!=(const Object& lhs, const Object& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
 
-/// store lhs by value, thus allowing to use extra wrappers for values
-struct SpaceshipByValue {
-    template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept
-    {
-        return [lhs...](const V& ...rhs) {
-            return details::spaceship<V...>(lhs..., rhs...);
-        };
-    }
-};
-constexpr SpaceshipByValue spaceshipByValue{};
+constexpr bool operator>(const Object& lhs, const Object& rhs) noexcept
+{
+    return rhs < lhs;
+}
+
+constexpr bool operator<=(const Object& lhs, const Object& rhs) noexcept
+{
+    return !(rhs < lhs);
+}
+
+constexpr bool operator>=(const Object& lhs, const Object& rhs) noexcept
+{
+    return !(lhs < rhs);
+}

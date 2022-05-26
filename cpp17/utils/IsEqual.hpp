@@ -26,7 +26,7 @@ SOFTWARE.
 
 struct IsEqual {
     template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept 
+    constexpr auto operator()(const V& ...lhs) const noexcept
     {
         return [&lhs...](const V& ...rhs) {
             return ((lhs == rhs) && ...);
@@ -38,7 +38,7 @@ constexpr IsEqual isEqual{};
 /// store lhs by value, thus allowing to use extra wrappers for fields
 struct IsEqualByValue {
     template <typename ...V>
-    constexpr auto operator()(const V& ...lhs) const noexcept 
+    constexpr auto operator()(const V& ...lhs) const noexcept
     {
         return [lhs...](const V& ...rhs) {
             return ((lhs == rhs) && ...);

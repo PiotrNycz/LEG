@@ -30,12 +30,16 @@ DIRS = .
 SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
 SRCS = $(wildcard $(SEARCHCPP))
 TESTS=$(subst .cpp,.bin,$(SRCS))
+OBJS=$(subst .cpp,.o,$(SRCS))
 
 %.bin: %.cpp
 	$(CXX) $(CPPFLAGS) $< -o $@
 	./$@
 
 all: $(TESTS)
+
+times: $(OBJS)
+	$(RM) $(OBJS)
 
 depend: .depend
 
