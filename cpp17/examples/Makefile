@@ -22,7 +22,7 @@
 
 CXX=g++-11
 RM=rm -f
-CPPFLAGS=-g -Og -I../utils
+CPPFLAGS=-g -O3 -I../utils -I../../../boost_1_79_0
 LDFLAGS=-g
 LDLIBS=$(shell root-config --libs)
 
