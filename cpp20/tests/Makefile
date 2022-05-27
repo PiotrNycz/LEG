@@ -22,7 +22,7 @@
 
 CXX=g++-11
 RM=rm -f
-CPPFLAGS=--std=c++17 -g -O3 -I../utils -I../../../boost_1_79_0
+CPPFLAGS=--std=c++20 -g -Og -I../utils
 LDFLAGS=-g
 LDLIBS=$(shell root-config --libs)
 
@@ -30,16 +30,12 @@ DIRS = .
 SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
 SRCS = $(wildcard $(SEARCHCPP))
 TESTS=$(subst .cpp,.bin,$(SRCS))
-OBJS=$(subst .cpp,.o,$(SRCS))
 
 %.bin: %.cpp
 	$(CXX) $(CPPFLAGS) $< -o $@
 	./$@
 
 all: $(TESTS)
-
-times: $(OBJS)
-	$(RM) $(OBJS)
 
 depend: .depend
 
