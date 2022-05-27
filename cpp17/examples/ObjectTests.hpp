@@ -25,12 +25,11 @@ SOFTWARE.
 #pragma once
 
 #include "TestUtils.hpp"
-#include <vector>
 #include "Object.hpp"
 
 inline void testObjectCompare()
 {
-    std::vector<Object> sortedList{
+    Object sortedList[] {
         // color ------------------------+
         // velocity -----------------+   |
         // weight ----------------+  |   |

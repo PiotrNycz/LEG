@@ -20,34 +20,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-CXX=g++-11
-LD=g++-11
-RM=rm -f
-CPPFLAGS=--std=c++20 -g -Og -I../utils
-LDFLAGS=-g
+BEGIN {
+    in_comment=0;
+}
 
-DIRS = .
-SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
-SRCS = $(wildcard $(SEARCHCPP))
-TESTS=$(subst .cpp,.bin,$(SRCS))
-OBJS=$(subst .cpp,.o,$(SRCS))
+/^\/\*/ {
+    in_comment=1;
+    next;
+}
 
-%.bin: %.o
-	$(LD) $(LDFLAGS) $< -o $@
-	./$@
+/\*\/$/ {
+    in_comment=0;
+    next;
+}
 
-all: $(TESTS)
+/^#include/ { 
+    includes[$2] = $0; 
+    next;
+}
 
-depend: .depend
+in_comment==0 {
+    lines[n++]=$0
+}
 
-.depend: $(SRCS)
-	$(RM) ./.depend
-	$(CXX) $(CPPFLAGS) -MM $^>>./.depend;
+END {
+    for (file in includes) {
+        print includes[file]
+    }
+    print ""
+    for (idx in lines) {
+        print lines[idx]
+    }
+}
 
-clean:
-	$(RM) $(TESTS) $(OBJS)
-
-distclean: clean
-	$(RM) *~ .depend
-
-include .depend

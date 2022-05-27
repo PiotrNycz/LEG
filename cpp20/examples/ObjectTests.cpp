@@ -23,12 +23,11 @@ SOFTWARE.
 */
 
 #include "TestUtils.hpp"
-#include <vector>
 #include "Object.hpp"
 
 int main()
 {
-    std::vector<Object> sortedList{
+    Object sortedList[]{
         // color ------------------------+
         // velocity -----------------+   |
         // weight ----------------+  |   |

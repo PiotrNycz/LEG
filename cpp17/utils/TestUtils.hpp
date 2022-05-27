@@ -25,8 +25,6 @@ SOFTWARE.
 #pragma once
 
 #include <cassert>
-#include <iterator>
-#include <algorithm>
 
 template <typename T>
 void assertEqual(const T& lhs, const T& rhs)
@@ -50,17 +48,15 @@ void assertLess(const T& lhs, const T& rhs)
     assert(lhs != rhs);
 }
 
-template <typename Range>
-void assertAscendingOrder(const Range& sortedList)
+template <typename T, unsigned N>
+void assertAscendingOrder(const T (&sortedList)[N])
 {
-    using std::begin;
-    using std::end;
-    auto lhs = begin(sortedList);
-    const auto endRange = end(sortedList);
+    auto* lhs = sortedList;
+    const auto* endRange = lhs + N;
     for (; lhs != endRange; ++lhs)
     {
         assertEqual(*lhs, *lhs);
-        for (auto rhs = std::next(lhs); rhs != endRange; ++rhs)
+        for (auto rhs = lhs + 1; rhs != endRange; ++rhs)
             assertLess(*lhs, *rhs);
     }
 }

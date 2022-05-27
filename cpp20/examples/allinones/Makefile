@@ -21,10 +21,10 @@
 # SOFTWARE.
 
 CXX=g++-11
-LD=g++-11
 RM=rm -f
-CPPFLAGS=--std=c++20 -g -Og -I../utils
+CPPFLAGS=--std=c++20 -g -O3
 LDFLAGS=-g
+LDLIBS=$(shell root-config --libs)
 
 DIRS = .
 SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
@@ -32,11 +32,14 @@ SRCS = $(wildcard $(SEARCHCPP))
 TESTS=$(subst .cpp,.bin,$(SRCS))
 OBJS=$(subst .cpp,.o,$(SRCS))
 
-%.bin: %.o
-	$(LD) $(LDFLAGS) $< -o $@
+%.bin: %.cpp
+	$(CXX) $(CPPFLAGS) $< -o $@
 	./$@
 
 all: $(TESTS)
+
+times: $(OBJS)
+	$(RM) $(OBJS)
 
 depend: .depend
 
@@ -45,7 +48,7 @@ depend: .depend
 	$(CXX) $(CPPFLAGS) -MM $^>>./.depend;
 
 clean:
-	$(RM) $(TESTS) $(OBJS)
+	$(RM) $(TESTS)
 
 distclean: clean
 	$(RM) *~ .depend

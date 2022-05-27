@@ -21,18 +21,19 @@
 # SOFTWARE.
 
 CXX=g++-11
+LD=g++-11
 RM=rm -f
 CPPFLAGS=--std=c++17 -g -Og -I../utils -I../../../boost_1_79_0
 LDFLAGS=-g
-LDLIBS=$(shell root-config --libs)
 
 DIRS = .
 SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
 SRCS = $(wildcard $(SEARCHCPP))
 TESTS=$(subst .cpp,.bin,$(SRCS))
+OBJS=$(subst .cpp,.o,$(SRCS))
 
-%.bin: %.cpp
-	$(CXX) $(CPPFLAGS) $< -o $@
+%.bin: %.o
+	$(LD) $(LDFLAGS) $< -o $@
 	./$@
 
 all: $(TESTS)
@@ -44,7 +45,7 @@ depend: .depend
 	$(CXX) $(CPPFLAGS) -MM $^>>./.depend;
 
 clean:
-	$(RM) $(TESTS)
+	$(RM) $(TESTS) $(OBJS)
 
 distclean: clean
 	$(RM) *~ .depend

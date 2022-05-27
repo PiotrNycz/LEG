@@ -63,3 +63,4 @@ inline bool operator>=(const Object& lhs, const Object& rhs) noexcept
 {
     return tieMembers(lhs) >= tieMembers(rhs);
 }
+

@@ -24,10 +24,9 @@ SOFTWARE.
 
 #include "TrivialOptional.hpp"
 #include "TestUtils.hpp"
-#include <vector>
 
 int main() {
-    std::vector<TrivialOptional<int>> sortedList{
+    TrivialOptional<int> sortedList[]{
         TrivialOptional<int>{false, 0},
         TrivialOptional<int>{true, -1},
         TrivialOptional<int>{true, 0},

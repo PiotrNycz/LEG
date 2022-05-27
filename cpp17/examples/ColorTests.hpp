@@ -25,12 +25,11 @@ SOFTWARE.
 #pragma once
 
 #include "TestUtils.hpp"
-#include <vector>
 #include "Color.hpp"
 
 inline void testColorCompare()
 {
-    std::vector<Color> sortedList{
+    Color sortedList[]{
         Color{1,2,3},
         Color{1,2,4},
         Color{1,3,1},

@@ -24,11 +24,10 @@ SOFTWARE.
 
 #include "RevertComparison.hpp"
 #include "TestUtils.hpp"
-#include <vector>
 
 int main() {
     using TypeForTest = RevertComparison<int>;
-    std::vector<TypeForTest> descendingOrder{
+    TypeForTest descendingOrder[]{
         TypeForTest{2},
         TypeForTest{1},
         TypeForTest{0}

@@ -20,34 +20,30 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-CXX=g++-11
-LD=g++-11
-RM=rm -f
-CPPFLAGS=--std=c++20 -g -Og -I../utils
-LDFLAGS=-g
+function compact () {
+    sed -i '/include "/d' $1
+    sed -i '/pragma/d' $1
+    awk -f compact.awk $1 > temp.cpp
+    sed -i 's/include <cassert>/define assert(x) static_cast<void>(x)/' temp.cpp
+    mv temp.cpp $1
+}
 
-DIRS = .
-SEARCHCPP = $(addsuffix /*.cpp ,$(DIRS))
-SRCS = $(wildcard $(SEARCHCPP))
-TESTS=$(subst .cpp,.bin,$(SRCS))
-OBJS=$(subst .cpp,.o,$(SRCS))
+cat ../Color.hpp > ObjectTests.cpp
+cat ../../utils/TrivialOptional.hpp >> ObjectTests.cpp
+cat ../Object.hpp >> ObjectTests.cpp
+cat ../../utils/TestUtils.hpp >> ObjectTests.cpp
+cat ../ObjectTests.cpp >> ObjectTests.cpp
+compact ObjectTests.cpp
 
-%.bin: %.o
-	$(LD) $(LDFLAGS) $< -o $@
-	./$@
+cat ../Quadratic.hpp > QuadraticTests.cpp
+cat ../QuadraticTests.cpp >> QuadraticTests.cpp
+compact QuadraticTests.cpp
 
-all: $(TESTS)
+cat ../../utils/IgnoreWhenCompare.hpp > QuadraticSolved1Tests.cpp
+cat ../QuadraticSolved1.hpp >> QuadraticSolved1Tests.cpp
+cat ../QuadraticSolved1Tests.cpp >> QuadraticSolved1Tests.cpp
+compact QuadraticSolved1Tests.cpp
 
-depend: .depend
-
-.depend: $(SRCS)
-	$(RM) ./.depend
-	$(CXX) $(CPPFLAGS) -MM $^>>./.depend;
-
-clean:
-	$(RM) $(TESTS) $(OBJS)
-
-distclean: clean
-	$(RM) *~ .depend
-
-include .depend
+cat ../QuadraticSolved2.hpp > QuadraticSolved2Tests.cpp
+cat ../QuadraticSolved2Tests.cpp >> QuadraticSolved2Tests.cpp
+compact QuadraticSolved2Tests.cpp
