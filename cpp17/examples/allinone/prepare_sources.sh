@@ -69,6 +69,19 @@ cat ../ObjectTests.hpp >> ObjectDoubleApplyTests.cpp
 cat ../ObjectDoubleApplyTests.cpp >> ObjectDoubleApplyTests.cpp
 compact ObjectDoubleApplyTests.cpp
 
+cat ../Color.hpp > ObjectDoubleApplyMacrosTests.cpp
+cat ../../utils/TrivialOptional.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../../utils/IsEqual.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../../utils/Spaceship.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../../utils/DoubleApplyMacros.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../Object.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../ColorDoubleApplyMacrosCompare.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../ObjectDoubleApplyMacrosCompare.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../../utils/TestUtils.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../ObjectTests.hpp >> ObjectDoubleApplyMacrosTests.cpp
+cat ../ObjectDoubleApplyMacrosTests.cpp >> ObjectDoubleApplyMacrosTests.cpp
+compact ObjectDoubleApplyMacrosTests.cpp
+
 cat ../Color.hpp > ObjectSimpleMacrosTests.cpp
 cat ../../utils/TrivialOptional.hpp >> ObjectSimpleMacrosTests.cpp
 cat ../../utils/SimpleCompareMacros.hpp >> ObjectSimpleMacrosTests.cpp

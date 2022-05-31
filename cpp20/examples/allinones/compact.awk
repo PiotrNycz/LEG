@@ -34,8 +34,8 @@ BEGIN {
     next;
 }
 
-/^#include/ { 
-    includes[$2] = $0; 
+/^#include/ {
+    includes[$2] = $0;
     next;
 }
 
